@@ -19,6 +19,11 @@ def planets(arg):
     vectoros.launch_task('planets')  # launch
     return EXIT
 
+def run_waveform_visualizer(arg):
+    vos_state.show_menu = False
+    vectoros.launch_task('waveform_visualizer')
+    return EXIT
+
 def menu_custom(the_menu):
     if the_menu.level==1:
         if machine.Pin(22).value():
@@ -65,7 +70,7 @@ async def vos_main():
     machine.Pin(22, machine.Pin.OUT).toggle()
     
     screen=vectoros.get_screen()
-    splashes = ["splash_europe.jpg", "splash_2024.jpg", "splash_wrencher.jpg"]
+    splashes = ["splash_x.jpg", "splash_7.jpg", "splash_wrencher.jpg"]
     screen.jpg(random.choice(splashes))
     await asyncio.sleep_ms(1000)
 
@@ -77,7 +82,7 @@ async def vos_main():
         with Menu(clear_after=True,fg_color=colors.PHOSPHOR_DARK,bg_color=colors.PHOSPHOR_BG,
                   cursor_bg=colors.PHOSPHOR_BG, cursor_fg=colors.PHOSPHOR_BRIGHT) as amenu:  
             ## name in menu, command to run, return value?
-            submenu=[["  Planets", planets, 0],["  Sketch",runsketch,0],["  Back",m_exit,None]]
+            submenu=[["  Planets", planets, 0],["  Sketch",runsketch,0],["  TWT Synth",launch,"waveform_visualizer"],["  Back",m_exit,None]]
             mainmenu=[[" Lissajous", run_lissajous,None],
                       [" Demos", SUBMENU, submenu] ,
                       [" Sound", toggle_sound, None],
@@ -101,3 +106,4 @@ if __name__=="__main__":
     import vectoros
     vectoros.run()
     
+
