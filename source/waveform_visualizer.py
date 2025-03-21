@@ -84,15 +84,16 @@ def menu_button(key):
     exit_flag = True 
 
 def interpolate_colour(colour1, colour2, factor):
-    r1 = (colour1 >> 16) & 0xFF
-    g1 = (colour1 >> 8) & 0xFF
-    b1 = colour1 & 0xFF
-    r2 = (colour2 >> 16) & 0xFF
-    g2 = (colour2 >> 8) & 0xFF
-    b2 = colour2 & 0xFF
+    # Extract RGB channels
+    r1, g1, b1 = colour1 >> 16 & 0xFF, colour1 >> 8 & 0xFF, colour1 & 0xFF
+    r2, g2, b2 = colour2 >> 16 & 0xFF, colour2 >> 8 & 0xFF, colour2 & 0xFF
+    
+    # Interpolate all channels
     r = int(r1 + (r2 - r1) * factor)
     g = int(g1 + (g2 - g1) * factor)
     b = int(b1 + (b2 - b1) * factor)
+    
+    # Combine channels
     return (r << 16) | (g << 8) | b
 
 def low_pass_filter(new_value, prev_value, alpha):
